@@ -1,0 +1,4 @@
+update a 
+set a.empi_id =  b.master_index_no
+from am_medical_records_home a
+left join mdm_biz_sys_pat b on a.visit_card_no = b.visit_card_no
