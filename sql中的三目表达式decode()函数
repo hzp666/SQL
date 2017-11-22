@@ -1,0 +1,5 @@
+decode（判断的字段，判断是否等于的值，等于值时取什么值，不等于值时取什么值）
+
+eg:
+decode(a.visit_type,'1',(select x.inpatient_code from emr_sb.pt_inpatient_cure x where a.visit_id = x.id),null) as Inhosp_No
+
