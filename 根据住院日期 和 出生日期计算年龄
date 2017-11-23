@@ -1,0 +1,4 @@
+sqlserver中：
+(year(p.Admit_Date)-year(p.Date_Birth))	as	age
+
+ps:(year(getdate())-year(p.Date_Birth))	as	age
