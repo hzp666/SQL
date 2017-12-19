@@ -1,3 +1,10 @@
 Oracle :
 
-SELECT * FROM Dba_Tables WHERE table_name = 'DEPARTMENT'   -- then you can see the owner,maybe you should add the prefix
+SELECT * FROM Dba_Tables WHERE table_name = 'DEPARTMENT'   
+
+
+PS:maybe you should transfer the lower case to Capital in the ' ' 
+Notepad++  the shortcut key is  select the word then ctrl+shift+U
+
+
+-- then you can see the owner,maybe you should add the prefix
