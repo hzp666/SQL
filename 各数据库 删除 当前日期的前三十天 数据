@@ -6,10 +6,25 @@ Oracle中删除 当前日期的前三十天 数据:
         方法二：
         select f_sdrq from T_JCXX
         where  f_sdrq >= to_char(to_timestamp(trunc(SYSDATE - 30)), 'yyyy - mm - dd hh24 : mi : ss.ff3')
-
+        
+        PS: 在SSIS控件内 应写为：
+        DELETE FROM ggs.l_tj_rm 
+        WHERE (to_char(to_timestamp(trunc(e_date)), '' yyyy - mm - dd hh24 : mi : ss.ff3 '') 
+                > to_char(to_timestamp(trunc("SYSDATE" - 30)), 
+                '' yyyy - mm - dd hh24 : mi : ss.ff3 ''))
 
 SqlServer中删除 当前日期的前三十天 数据: delete from OR_Exam_Report_GE
                                     where Exam_Date >= cast(GETDATE()-30 as date)
+
+
+
+
+                                    PS:按时间段
+                                        select *
+                                        from main_pb
+                                        where 
+                                        convert(varchar(10),opdate,23) >=convert(varchar(10),'2017-01-01',23)
+                                        and convert(varchar(10),opdate,23) <=convert(varchar(10),'2017-06-30',23)
 
 
 MySQL中删除 当前日期的前三十天 数据:
