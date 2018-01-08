@@ -1,0 +1,11 @@
+Oracle中删除 当前日期的前三十天 数据:
+where Exam_Date >= TRUNC(SYSDATE - 30) 
+delete from OR_Exam_Report_GE 
+
+SqlServer中删除 当前日期的前三十天 数据: delete from OR_Exam_Report_GE
+                                    where Exam_Date >= cast(GETDATE()-30 as date)
+
+
+MySQL中删除 当前日期的前三十天 数据:
+                                      delete from OR_Exam_Report_GE  
+                                      where Exam_Date >= (curdate() - 30)
