@@ -8,4 +8,4 @@ SqlServer中删除 当前日期的前三十天 数据: delete from OR_Exam_Repor
 
 MySQL中删除 当前日期的前三十天 数据:
                                       delete from OR_Exam_Report_GE  
-                                      where Exam_Date >= (curdate() - 30)
+                                      where Exam_Date >=  date_sub(curdate(),interval 30 day) 
