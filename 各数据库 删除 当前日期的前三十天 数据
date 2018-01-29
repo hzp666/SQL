@@ -1,18 +1,13 @@
+1.要把时间字段的数据类型 改为 date
+2.可以在 数据源抽取控件中 SQL文，将其改为 date， eg:   SqlServer源库： convert(date,report_date,120)  as opdate1,
+3."Dec 31 2011  1:00:00:000AM"  这种数据类型 是 timestamp ，需要将其改为 date 类型。
+
 Oracle中删除 当前日期的前三十天 数据:
-        方法一：
+        
         delete from OR_Exam_Report_GE 
         where Exam_Date >= TRUNC(SYSDATE - 30) 
 
-        方法二：
-        select f_sdrq from T_JCXX
-        where  f_sdrq >= to_char(to_timestamp(trunc(SYSDATE - 30)), 'yyyy - mm - dd hh24 : mi : ss.ff3')
         
-        PS: 在SSIS控件内 应写为：
-        DELETE FROM ggs.l_tj_rm 
-        WHERE (to_char(to_timestamp(trunc(e_date)), '' yyyy - mm - dd hh24 : mi : ss.ff3 '') 
-                > to_char(to_timestamp(trunc("SYSDATE" - 30)), 
-                '' yyyy - mm - dd hh24 : mi : ss.ff3 ''))
-
 SqlServer中删除 当前日期的前三十天 数据: delete from OR_Exam_Report_GE
                                     where Exam_Date >= cast(GETDATE()-30 as date)
 
