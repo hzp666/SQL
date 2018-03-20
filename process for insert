@@ -1,0 +1,120 @@
+USE [CDR]
+GO
+
+/****** Object:  StoredProcedure [dbo].[Proc_PA_Physical_Examination_Insert]    Script Date: 03/20/2018 16:38:29 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+ALTER PROC [dbo].[Proc_PA_Physical_Examination_Insert](@SEQ_ID nvarchar(100))
+as
+begin
+declare @sql varchar(max) = ''
+set @sql =
+'insert into PA_Physical_Examination(
+Key_ID,
+MI_Code,
+     MI_Name,
+     Physical_Exam_No,
+     Physical_Exam_ID,
+     Health_Card_NO,
+     Company_Exam_ID,
+     Physical_Exam_Group_Code,
+     Physical_Exam_Group_Name,
+     Visit_Card_No,
+     Pat_Name,
+     Sex_Code,
+     Visit_Num,
+     Date_Birth,
+     Occupation_Code,
+     Specimen_NO,
+     Company_Name,
+     Physical_Exam_Date,
+     Physical_Exam_Type_Code,
+     Physical_Exam_Package_Code,
+     Physical_Exam_Item_Code,
+     Physical_Exam_Item_Name,
+     Unit,
+     Item_Upper_Limit,
+     Item_Lower_Limit,
+     Physical_Exam_Dept_Code,
+     Physical_Exam_Dr_Index_No,
+     Physical_Exam_Dr_Code,
+     Physical_Exam_Dr_Name,
+     Check_Dr_Code,
+     Check_Date,
+     Physical_Exam_Result,
+     Reference_Result,
+     Normal_Result,
+     Conclusion,
+     Paid_Fee,
+     Receivable_Fee,
+     Charge_Flag,
+     Record_Staff_Index_No,
+     Record_Staff_Code,
+     Record_Staff_Name,
+     Note,
+     Cancel_Status,
+     Cancel_Date)'
++
+'select * from openquery(sb_ods,''
+select 
+  null  as  Key_ID  ,  
+  cast( ''''321002468830683'''' as varchar(50))   as MI_Code  ,   
+  cast( ''''苏北人民医院'''' as varchar(100)) as  MI_Name  ,  
+  a.SEQ_ID  as  Physical_Exam_No  ,  
+  a.CHECK_ID  as  Physical_Exam_ID  ,
+  a.PERSON_ID  as  Health_Card_NO  , 
+  a.TASK_ID  as  Company_Exam_ID  ,  
+  a.COMBINATION_ID  as  Physical_Exam_Group_Code  ,  
+  a.COMBINATION_NAME  as  Physical_Exam_Group_Name  ,
+  null  as  Visit_Card_No  ,  
+  null  as  Pat_Name  ,   
+  null  as  Sex_Code  ,   
+  null  as  Visit_Num  ,  
+  null  as  Date_Birth  , 
+  null  as  Occupation_Code  ,   
+  a.SAMPLE_NO  as  Specimen_NO  ,  
+  null  as  Company_Name  ,   
+  a.check_date  as  Physical_Exam_Date  ,   
+  null  as  Physical_Exam_Type_Code  ,   
+  null  as  Physical_Exam_Package_Code  ,  
+  a.ITEM_ID  as  Physical_Exam_Item_Code  ,
+  a.ITEM_NAME  as  Physical_Exam_Item_Name  ,  
+  a.UNIONS  as  Unit  ,  
+  a.NUM_DOWN  as  Item_Upper_Limit  , 
+  a.NUM_UP  as  Item_Lower_Limit  ,   
+  a.EXEC_DEPT_ID  as  Physical_Exam_Dept_Code  ,   
+  null  as  Physical_Exam_Dr_Index_No  ,   
+  null  as  Physical_Exam_Dr_Code  ,   
+  a.CHECKDOC  as  Physical_Exam_Dr_Name  ,  
+  a.AUDITINGDOC  as  Check_Dr_Code  ,  
+  a.AUDITING_DATE  as  Check_Date  ,   
+  a.RESULT  as  Physical_Exam_Result  ,   
+  a.RANGE_RESULT  as  Reference_Result  , 
+  a.STANDARD_RESULT  as  Normal_Result   ,
+  b.advice  as  Conclusion  ,  
+  null  as  Paid_Fee  ,   
+  null  as  Receivable_Fee  ,  
+  null  as  Charge_Flag  ,   
+  null  as  Record_Staff_Index_No  , 
+  null  as  Record_Staff_Code  ,  
+  null  as  Record_Staff_Name  ,  
+  a.DES  as  Note  ,   
+  a.DELETE_FLAG  as  Cancel_Status  ,  
+  a.DELETE_DATE  as  Cancel_Date    
+FROM hrp.PE_CHECK_ITEM a 
+left join hrp.pe_check_report b on a.check_id = b.check_id
+where a.SEQ_ID = '''''
++ isnull(@SEQ_ID,' ') + '''''''
+)'
+--print @sql
+exec(@sql)
+end;
+
+GO
+
+
