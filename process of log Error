@@ -1,0 +1,32 @@
+ALTER proc [dbo].[Proc_Log_Trigger_Error](	@trigger_name [nvarchar](100) ,
+									@trigger_table [nvarchar](100) ,
+									@trigger_type nvarchar(100),
+									@change_type nvarchar(100),
+									@target_table nvarchar(100),
+									@trigger_code [nvarchar](max) 
+									)
+as
+insert into Log_Trigger_Error(	[Trigger_Name],
+								[Trigger_Table] ,
+								[Trigger_Type],
+								[Change_Type],
+								[Target_Table],
+								[Trigger_Code] ,
+								[Trigger_Date] ,
+								[Error_Number] ,
+								[Error_Message] ,
+								[Error_Severity] ,
+								[Error_State] )
+values(
+	@trigger_name ,
+	@trigger_table ,
+	@trigger_type,
+	@change_type,
+	@target_table,
+	@Trigger_Code ,
+	getdate(),
+	Error_Number() ,
+	Error_Message() ,
+	Error_Severity(),
+	Error_State() 
+)
