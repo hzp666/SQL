@@ -1,0 +1,27 @@
+ALTER proc [dbo].[Proc_Log_Trigger_Success](@trigger_name [nvarchar](100)
+									,@trigger_table [nvarchar](100)
+									,@trigger_type [nvarchar](100)
+									,@change_type nvarchar(100)
+									,@trigger_code nvarchar(1000)
+									,@target_table [nvarchar](100)
+									,@begin_date datetime2(3)
+									) 
+as
+insert into Log_Trigger_Success(	[Trigger_Name] ,
+									[Trigger_Table] ,
+									[Trigger_Type] ,
+									[Change_Type],
+									Trigger_Code,
+									[Target_Table] ,
+									[Begin_Date] ,
+									[End_Date] 
+								)
+values(@trigger_name
+	  ,@trigger_table
+	  ,@trigger_type
+	  ,@change_type
+	  ,@trigger_code
+	  ,@target_table
+	  ,@begin_date 
+	  ,getdate()
+	  )
