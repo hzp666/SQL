@@ -1,0 +1,1 @@
+(select top 1 Diag_ICD10_Code from (select e.Diag_ICD10_Code,row_number() over(ORDER BY [Diag_Date] asc) SN from cdr.dbo.pa_diag_info(nolock) e where e.Inhosp_No is not null and  Diag_Categ_Code ='5562' and Main_Flag='0' and a.Inhosp_No = e.Inhosp_No)t where t.SN=5)	as	RD_DIS_CODE_5	
