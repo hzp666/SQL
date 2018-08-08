@@ -8,27 +8,27 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-create  trigger [dbo].[Trg_PA_Physical_Examination_Update]     /* trigger's name */
-on [dbo].[PE_CHECK_ITEM]  /* trigger on which table */
-after update    /* trigger's type,eg:delete,insert,delete */
+create  trigger [dbo].[Trg_PA_Physical_Examination_Update]     						/* trigger's name */
+on [dbo].[PE_CHECK_ITEM]										/* trigger on which table */
+after update												/* trigger's type,eg:delete,insert,delete */
 as
-IF @@ROWCOUNT = 0 RETURN			/*如果update条目为0的话，跳出该次触发*/
+IF @@ROWCOUNT = 0 RETURN									/*如果update条目为0的话，跳出该次触发*/
 ELSE
 BEGIN
 	set nocount on
-	set xact_abort on     /*  for if any error then rollback and stop */
+	set xact_abort on										/*  for if any error then rollback and stop */
 	begin try
-	begin tran           /* begin transaction */
-		declare @SEQ_ID nvarchar(100),    /* the source table's key column  */
-				@type nvarchar(100),          /*  the type of the date changes,eg:delete,insert,update... */
+	begin tran												/* begin transaction */
+		declare @SEQ_ID nvarchar(100),						/* the source table's key column  */
+				@type nvarchar(100),						/*  the type of the date changes,eg:delete,insert,update... */
 				@begin_date datetime2(3) = getdate(),       /* for record the transaction's parameter */
 				@trigger_name nvarchar(100) = 'Trg_PA_Physical_Examination_Update',  /* for record the transaction's parameter */
 				@trigger_table nvarchar(100) = 'PE_CHECK_ITEM',      /* for record the transaction's parameter */
 				@target_table nvarchar(100) = 'PA_Physical_Examination',   /* for record the transaction's parameter */
 				@trigger_type nvarchar(20) = 'Update',			/*变量赋值与申明会改变@@rowcount的值*/
-				@change_num int               /* for record the transaction's parameter */
-		select @change_num = count(1) from inserted		/*保存更改的条目到变量中*/
-		if @change_num = 1								/*依据更改条目，判断是否使用游标*/
+				@change_num int								/* for record the transaction's parameter */
+		select @change_num = count(1) from inserted			/*保存更改的条目到变量中*/
+		if @change_num = 1									/*依据更改条目，判断是否使用游标*/
 		begin
 			select  @SEQ_ID = SEQ_ID,@type = TYPE from inserted          
 			exec CDR.[dbo].[Proc_PA_Physical_Examination_Delete] @SEQ_ID
@@ -61,5 +61,3 @@ BEGIN
 	set xact_abort off
 END
 GO
-
-
