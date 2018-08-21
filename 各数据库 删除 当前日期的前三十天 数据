@@ -4,8 +4,10 @@
 
 Oracle中删除 当前日期的前三十天 数据:
         
-        delete from OR_Exam_Report_GE 
-        where Exam_Date >= TRUNC(SYSDATE - 30) 
+        1.      delete from OR_Exam_Report_GE 
+                where Exam_Date >= TRUNC(SYSDATE - 30) 
+        
+        2.   where to_char(A.CHECK_DATE)>=to_char(to_date(trunc(SYSDATE-1)))  ps:特殊的情况 处理
 
         
 SqlServer中删除 当前日期的前三十天 数据: delete from OR_Exam_Report_GE
