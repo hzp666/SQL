@@ -1,5 +1,6 @@
 select  newid() as DATA_ID, *	 from (SELECT  a.ORGAN_NAME, a.DPT_CODE,a.DPT_NAME,a.STAT_DATE,a.COST_TYPE,
 												
+												/*行转列后  的 别名，就按 【1】 中括号里边的转换*/
 												1	     as COST_01	,	
 												2	     as COST_02	,	
 												3	     as COST_03	,	
