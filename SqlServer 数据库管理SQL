@@ -115,3 +115,15 @@ WHERE qs.total_elapsed_time > 0
       and qs.last_execution_time>'2017/07/23  07:00:24'
 	  and qs.execution_count > 50
 ORDER BY qs.total_elapsed_time DESC
+
+
+
+=====查看表大小======
+
+以下是sp_spaceused和sp_MSforeachtable具体的使用示例： 
+
+exec sp_spaceused '表名'            （查询表所占空间） 
+exec sp_spaceused '表名', true       (更新表的空间大小，准确的表空大小） 
+exec sp_spaceused                    (数据库大小查询） 
+exec sp_MSforeachtable "exec sp_spaceused '?'"     (所有用户表空间表小，SQL统计数据，，大量事务操作后可能不准） 
+exec sp_MSforeachtable "exec sp_spaceused '?',true"    (所有用户表空间表小，大数据库慎用）
