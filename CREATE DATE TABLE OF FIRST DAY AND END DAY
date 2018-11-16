@@ -1,0 +1,22 @@
+/* declare the var */
+declare @start_date date
+declare @end_date date
+
+/*  set the var */
+select @start_date = '2015-01-01',
+	 @end_date = '2019-01-01'
+    
+
+
+while @start_date < @end_date
+begin 
+insert into Date
+(start_date,end_date)
+select	DATEADD(MM,DATEDIFF(MM,0,@start_date),0) as start_date,
+		DATEADD(DAY,-1,DATEADD(MM,DATEDIFF(MM,0,@start_date)+1,0)) as end_date
+
+set @start_date= DATEADD(MM,1,@start_date)
+END
+GO
+
+
