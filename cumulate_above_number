@@ -1,0 +1,35 @@
+
+
+select month,
+	round((select sum(b.sale_amount) from 
+				(select sum(sale_amount) as sale_amount,month
+				from fact_sale_month
+				group by month) b 
+	where b.month <= a.month),1) as sale_amount,
+	
+	(select sum(b.plan_amount) from 
+				(select sum(plan_amount) as plan_amount,month
+				from fact_sale_month
+				group by month) b 
+	where b.month <= a.month) as plan_amount,
+	
+	(select sum(b.Estimate_Amount) from 
+				(select sum(Estimate_Amount) as Estimate_Amount,month
+				from fact_sale_month
+				group by month) b 
+	where b.month <= a.month) as Estimate_Amount,
+	
+	round((select avg(b.plan_rate) from 
+				(select avg(plan_rate) as plan_rate,month
+				from fact_sale_month
+				group by month) b 
+	where b.month <= a.month),2) as plan_rate,
+	
+	round((select avg(b.Estimate_rate) from 
+				(select avg(Estimate_rate) as Estimate_rate,month
+				from fact_sale_month
+				group by month) b 
+	where b.month <= a.month),2) as Estimate_rate
+from (select month
+from fact_sale_month
+group by month) a
