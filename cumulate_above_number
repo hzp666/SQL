@@ -1,5 +1,5 @@
 
-
+One:
 select month,
 	round((select sum(b.sale_amount) from 
 				(select sum(sale_amount) as sale_amount,month
@@ -33,3 +33,22 @@ select month,
 from (select month
 from fact_sale_month
 group by month) a
+
+Two:
+
+set @var_s_a = 0;
+set @var_s_a = 0;
+set @var_s_a = 0;
+
+
+
+set @var = 0;
+select  month,sale_amount,Sale_Fir__Name,(@var := @var + sale_amount) as tttt
+from (		select month,sum(sale_amount)  sale_amount,Sale_Fir__Name
+			from fact_sale_month
+            where month < '3'
+            group by month,Sale_Fir__Name
+			
+
+) a
+group by Sale_Fir__Name
