@@ -1,0 +1,36 @@
+DELIMITER $$
+CREATE PROCEDURE test_date(IN date_start date,IN date_end date) 
+BEGIN
+    DECLARE date_flag date DEFAULT '2026-01-01';
+    set date_flag = date_sub(date_end, interval 1 day);
+    
+WHILE date_flag > date_start DO
+INSERT INTO dim_date
+SELECT date_flag  as date,
+ 
+    date_format(date_flag, "%Y%m%d")as id,
+ 
+    year(date_flag) as y,
+ 
+    month(date_flag) as m,
+ 
+    day(date_flag) as d,
+ 
+    date_format(date_flag, "%x")as yw,
+ 
+    week(date_flag, 3) as w,
+ 
+    quarter(date_flag) as q,
+ 
+    weekday(date_flag)+1 as wd,
+ 
+    monthname(date_flag) as m_name,
+ 
+    dayname(date_flag) as wd_name;
+	set date_flag = date_sub(date_flag, interval 1 day);
+ end while;   
+END $$
+DELIMITER ;
+
+
+call test_date('2000-01-01','2026-01-01')
